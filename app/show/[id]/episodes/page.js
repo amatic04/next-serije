@@ -1,3 +1,8 @@
+/**
+ * Prikaz popisa svih epizoda određene serije.
+ * Prikazuje sve epizode u listi s linkom na detalje pojedine epizode.
+ */
+
 import Link from "next/link";
 
 export default async function EpisodesPage({ params }) {
@@ -16,7 +21,7 @@ export default async function EpisodesPage({ params }) {
                 {episodes.map((ep) => (
                     <li key={ep.id} className="border-b pb-2">
                         <Link
-                            href={`/show/${id}/episodes/${ep.id}`}  // ← točna putanja
+                            href={`/show/${id}/episodes/${ep.id}`}  //link na detalje epizode
                             className="text-blue-600 hover:underline"
                         >
                             <strong>Sezona {ep.season}, Epizoda {ep.number}:</strong> {ep.name}

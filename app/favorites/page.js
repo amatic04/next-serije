@@ -1,23 +1,41 @@
+/**
+ * Klijentska stranica za prikaz i uklanjanje spremljenih favorita.
+ * Dohvaća favorite s API-ja pri učitavanju i omogućuje njihovo uklanjanje.
+ */
+
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function FavoritesPage() {
     const [favorites, setFavorites] = useState([]);
+    const [isPending, startTransition] = useTransition(); // Koristi se za pokazivanje da je akcija u tijeku
 
+    // Dohvat favorita s API-ja (GET)
     useEffect(() => {
-        const saved = localStorage.getItem("favorites");
-        if (saved) {
-            setFavorites(JSON.parse(saved));
-        }
+        fetch("/api/favorites")
+            .then((res) => res.json())
+            .then((data) => {
+                setFavorites(data);
+            });
     }, []);
 
+    // Uklanjanje favorita poziva DELETE na /api/favorites
     function removeFavorite(id) {
-        const updatedFavorites = favorites.filter((fav) => fav.id !== id);
-        setFavorites(updatedFavorites);
-        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+        startTransition(async () => {
+            const res = await fetch("/api/favorites", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id })
+            });
+
+            if (res.ok) {
+                // Lokalno ažuriranje bez potrebe za ponovnim fetchanjem
+                setFavorites((prev) => prev.filter((fav) => fav.id !== id));
+            }
+        });
     }
 
     if (favorites.length === 0) {
@@ -32,6 +50,7 @@ export default function FavoritesPage() {
                     <div key={show.id} className="bg-white shadow rounded-xl p-4 relative">
                         <button
                             onClick={() => removeFavorite(show.id)}
+                            disabled={isPending}
                             className="absolute top-2 right-2 text-sm text-red-500 hover:text-red-700"
                             title="Ukloni iz favorita"
                         >

@@ -1,30 +1,39 @@
+/**
+ * Gumb za dodavanje serije u favorite.
+ * Prikazuje status (spremljeno / spremanje) i deaktivira se kad je već spremljeno.
+ */
+
 "use client";
 import { useState, useEffect, useTransition } from "react";
 
-export default function FavoriteButton({ id, name, image, genres = [] }) {
-    const [saved, setSaved] = useState(false);
+export default function FavoriteButton({ id, name, image, genres, initialSaved = false }) {
+    const [saved, setSaved] = useState(initialSaved);
     const [isPending, startTransition] = useTransition();
 
+    // Ako show nije već označen kao spremljen, provjeravamo je li u favoritima (GET)
     useEffect(() => {
-        const storedFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-        const alreadySaved = storedFavorites.some((fav) => fav.id === id);
-        setSaved(alreadySaved);
-    }, [id]);
+        if (initialSaved) return;
 
-    async function dodajFavorita() {
+        fetch("/api/favorites")
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.find((fav) => fav.id === id)) {
+                    setSaved(true);
+                }
+            });
+    }, [initialSaved, id]);
+
+    // Dodavanje u favorite (POST na /api/favorites)
+
+    function dodajFavorita() {
         startTransition(async () => {
             const res = await fetch("/api/favorites", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, name, image, genres }),
+                body: JSON.stringify({ id, name, image, genres })
             });
 
-            if (res.ok) {
-                const storedFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-                const updatedFavorites = [...storedFavorites, { id, name, image, genres }];
-                localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-                setSaved(true);
-            }
+            if (res.ok) setSaved(true);
         });
     }
 
@@ -32,11 +41,10 @@ export default function FavoriteButton({ id, name, image, genres = [] }) {
         <button
             disabled={saved || isPending}
             onClick={dodajFavorita}
-            className={`mt-2 text-xs px-3 py-1 rounded-md border border-gray-300 
-                        ${saved ? "bg-green-100 text-green-800" : "bg-white text-gray-700 hover:bg-gray-100"}
-                        transition-colors duration-200`}
+            className={`mt-3 px-3 py-1 rounded text-white transition-colors ${saved ? "bg-green-600" : "bg-amber-500 hover:bg-amber-600"
+                }`}
         >
-            {saved ? "✔ Spremljeno" : isPending ? "⏳ Spremam..." : "⭐ Dodaj u favorite"}
+            {saved ? "Spremljen!" : isPending ? "Spremam..." : "Dodaj u favorite"}
         </button>
     );
 }

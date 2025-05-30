@@ -1,3 +1,9 @@
+
+/**
+ * Prikaz detalja pojedine epizode.
+ * Dohvaća podatke o epizodi (slika, sažetak, broj epizode/sezone).
+ */
+
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -1,3 +1,8 @@
+/**
+ * Prikaz glumačke postave određene serije.
+ * Dohvaća i prikazuje sve glumce povezane sa serijom.
+ */
+
 import { notFound } from "next/navigation";
 
 export default async function CastPage({ params }) {

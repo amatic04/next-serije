@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬 Next.js Serije App
 
-## Getting Started
+Aplikacija za pregledavanje i spremanje omiljenih serija, bazirana na [TVmaze API-ju](https://www.tvmaze.com/api). Omogućuje pretragu, pregled detalja i dodavanje serija u favorite.
 
-First, run the development server:
+🔗 **Online demo:** [https://next-serije-am.vercel.app](https://next-serije-am.vercel.app)
+
+📦 **Repozitorij:** [https://github.com/amatic04/next-serije](https://github.com/amatic04/next-serije)
+
+---
+
+## ✨ Funkcionalnosti
+
+- 🏠 **Početna stranica** s listom TV serija
+- 🔍 **Pretraga serija** po nazivu
+- 📄 **Detaljna stranica serije** s opisom, ocjenom, žanrom i datumom premijere
+- 🎭 **Cast stranica** s glumcima za svaku seriju
+- 📺 **Epizode stranica** s listom svih epizoda i pojedinačnim prikazom
+- ⭐ **Spremanje i brisanje favorita** (lokalno pohranjeno na serverskoj memoriji)
+- 📁 **Favorites stranica** sa svim spremljenim serijama
+- 🧭 **Navigacija unutar serije** putem bočne trake (layout)
+- ✅ **Jednostavan, responzivan dizajn** s Next.js + Tailwind CSS
+- ↩  **Povratak** na prethodnu stranicu jednim klikom
+- ❌ **404 stranica** kada serija ili epizoda ne postoji
+- 🚀 **Deploy na Vercel**
+
+---
+
+## 🚀 Lokalno pokretanje
+
+### Kloniraj repozitorij
 
 ```bash
+git clone https://github.com/amatic04/next-serije.git
+cd next-serije
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📌 **Napomena**: Kreiraj `.env.local` datoteku:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+    NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+🛠 **Tehnologije**
 
-To learn more about Next.js, take a look at the following resources:
+    Next.js (App Router)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    React
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    Tailwind CSS
 
-## Deploy on Vercel
+    TVmaze API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    Vercel (deploy)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+❗ Napomene
+
+   - Favoriti se spremaju u memoriju servera (nema baze podataka).
+
+   - Pošto se memorija "resetira" pri redeployu ili refreshu servera, favoriti nisu trajno pohranjeni.
+
+   - Aplikacija koristi cache: "no-store" kako bi se osigurali svježi podaci prilikom dohvaćanja favorita.

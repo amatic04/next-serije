@@ -1,12 +1,12 @@
-"use client";
+"use client"; // Oznaka da je komponenta klijentska (potrebna za korištenje hookova kao što je useRouter)
 
 import { useRouter } from "next/navigation";
 
 export default function BackButton() {
-    const router = useRouter();
+    const router = useRouter();  // Dohvaća router objekt za navigaciju
 
     function handleClick() {
-        router.back();
+        router.back();  // Vraća korisnika na prethodnu stranicu (kao browserov back)
     }
 
     return (
