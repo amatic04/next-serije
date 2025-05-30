@@ -2,7 +2,7 @@
 
 Aplikacija za pregledavanje i spremanje omiljenih serija, bazirana na [TVmaze API-ju](https://www.tvmaze.com/api). Omogućuje pretragu, pregled detalja i dodavanje serija u favorite.
 
-🔗 **Online demo:** [https://next-serije-am.vercel.app](https://next-serije-am.vercel.app)
+🔗 **Online demo:** [https://next-serije.vercel.app](https://next-serije.vercel.app)
 
 📦 **Repozitorij:** [https://github.com/amatic04/next-serije](https://github.com/amatic04/next-serije)
 
